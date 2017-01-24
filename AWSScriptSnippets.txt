@@ -1,0 +1,11 @@
+# get a list of instances in a region
+aws --profile dixonaws@amazon.com --region us-east-2 ec2 describe-instances |grep -i instanceid
+
+# lift instance termination protection on an instance
+aws --profile dixonaws@amazon.com --region us-east-2 ec2 modify-instance-attribute --instance-id i-05a0eddf5bbb55d32 --attribute=disableApiTermination --value false
+
+# terminate an instance
+aws --profile dixonaws@amazon.com --region us-east-2 ec2 terminate-instances --instance-ids i-05a0eddf5bbb55d32
+
+# print a list of instances in a region using a for loop
+for instance in $`aws --profile dixonaws@amazon.com --region us-east-2 ec2 describe-instances |grep -i instanceid |awk -F ":" '{print $2}'` do echo $instance done
